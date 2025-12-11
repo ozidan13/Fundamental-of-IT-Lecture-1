@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Osama Zinhom - IT - Lecture 1</title>
+    <meta name="description"
+        content="Comprehensive guide to IT Fundamentals, Hardware, Software, and Exam Preparation.">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+
+    <!-- Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        neon: {
+                            green: '#10B981',
+                            blue: '#3B82F6',
+                            purple: '#8B5CF6',
+                            red: '#ef4444',
+                            amber: '#f59e0b'
+                        },
+                        dark: {
+                            bg: '#020617',
+                            card: '#0F172A',
+                            border: '#1E293B'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        arabic: ['Cairo', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    boxShadow: {
+                        'neon-green': '0 0 20px -5px rgba(16, 185, 129, 0.5)',
+                        'neon-blue': '0 0 20px -5px rgba(59, 130, 246, 0.5)',
+                        'neon-purple': '0 0 20px -5px rgba(139, 92, 246, 0.5)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #020617;
+            color: #E2E8F0;
+            overflow-x: hidden;
+            background-image:
+                radial-gradient(circle at 10% 20%, rgba(59, 130, 246, 0.05) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(139, 92, 246, 0.05) 0%, transparent 20%);
+        }
+
+        /* Glassmorphism */
+        .glass-card {
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .glass-card:hover {
+            border-color: rgba(59, 130, 246, 0.4);
+            box-shadow: 0 10px 40px -10px rgba(59, 130, 246, 0.15);
+            transform: translateY(-4px);
+        }
+
+        .glass-header {
+            background: rgba(2, 6, 23, 0.85);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Text Gradients */
+        .text-gradient {
+            background: linear-gradient(135deg, #60A5FA 0%, #A78BFA 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Utilities */
+        .arabic-text {
+            font-family: 'Cairo', sans-serif;
+            direction: rtl;
+            line-height: 1.6;
+        }
+
+        /* SVGs */
+        .svg-animate path {
+            transition: all 0.5s ease;
+        }
+
+        .svg-animate:hover path.active {
+            fill: #3B82F6;
+            filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.5));
+        }
+
+        /* Quiz Styles */
+        .answer-container {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out, padding 0.3s ease;
+            background: rgba(16, 185, 129, 0.05);
+            border-radius: 0.5rem;
+        }
+
+        .answer-container.show {
+            max-height: 200px;
+            padding: 1rem;
+            margin-top: 1rem;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        /* Table */
+        .custom-table tr:nth-child(even) {
+            background-color: rgba(30, 41, 59, 0.3);
+        }
+
+        .custom-table td,
+        .custom-table th {
+            padding: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .custom-table th {
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-size: 0.75rem;
+            color: #94A3B8;
+        }
+    </style>
+</head>
+
+<body class="antialiased font-sans flex flex-col min-h-screen">
+
+    <!-- Navbar -->
+    <nav class="fixed top-0 w-full z-50 glass-header">
+        <div class="container mx-auto px-6 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div
+                    class="w-8 h-8 rounded bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-bold shadow-lg shadow-blue-500/20">
+                    IT</div>
+                <span class="font-bold text-lg tracking-wide text-slate-200">Fundamental<span
+                        class="text-blue-500">Guide</span></span>
+            </div>
+            <div class="hidden lg:flex gap-8 text-sm font-medium text-slate-400">
+                <a href="#it-intro" class="hover:text-blue-400 transition">IT Intro</a>
+                <a href="#computer" class="hover:text-blue-400 transition">Computer</a>
+                <a href="#hardware" class="hover:text-blue-400 transition">Hardware</a>
+                <a href="#cpu" class="hover:text-blue-400 transition">CPU</a>
+                <a href="#storage" class="hover:text-blue-400 transition">Storage</a>
+                <a href="#exam"
+                    class="px-5 py-2 rounded-full bg-blue-600/10 text-blue-400 border border-blue-500/20 hover:bg-blue-600 hover:text-white transition">Start
+                    Exam</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-grow pt-24">
+
+        <!-- Hero Section -->
+        <header id="hero" class="relative pb-20 px-6">
+            <div class="container mx-auto text-center relative z-10" data-aos="fade-up">
+                <div
+                    class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-800/50 border border-slate-700 text-xs font-mono text-blue-400 mb-6">
+                    <span class="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
+                    LECTURE 1: INTRODUCTION
+                </div>
+
+                <div class="mb-4">
+                    <h1 class="text-5xl md:text-7xl font-black mb-2 tracking-tight leading-1 text-white">
+                        Fundamental of <br> <span class="text-gradient">Information Technology</span>
+                    </h1>
+                    <h2 class="text-2xl md:text-4xl font-bold font-arabic text-slate-300 mt-2">
+                        أساسيات تقنية المعلومات
+                    </h2>
+                </div>
+
+                <p class="text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed mb-8">
+                    Detailed coverage of IT Infrastructure, Computer Components, Hardware/Software, and Storage Systems.
+                    <span class="block text-sm font-arabic text-slate-500 mt-1">تغطية شاملة للبنية التحتية لتقنية
+                        المعلومات، مكونات الحاسوب، الأجهزة/البرمجيات، وأنظمة التخزين.</span>
+                </p>
+
+                <div class="flex flex-wrap justify-center gap-4 text-sm text-slate-500 font-medium">
+                    <div class="glass-card px-4 py-2 rounded-full flex items-center gap-2">
+                        <i class="fas fa-user-tie text-blue-500"></i>
+                        <span>Eng. Osama Zinhom Saad</span>
+                    </div>
+                    <div class="glass-card px-4 py-2 rounded-full flex items-center gap-2">
+                        <i class="fas fa-users text-green-500"></i>
+                        <span><a href="https://chat.whatsapp.com/KZVcp5IPWOpFqnOaOJKjy9" target="_blank">مجموعة الواتساب
+                                للطلاب</a></span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- 1. What is IT? -->
+        <section id="it-intro" class="py-20 px-6 bg-slate-900/30">
+            <div class="container mx-auto max-w-6xl">
+                <div class="flex items-center gap-4 mb-12">
+                    <span
+                        class="flex items-center justify-center w-12 h-12 rounded-xl bg-blue-500/20 text-blue-400 font-bold text-xl">1</span>
+                    <div>
+                        <h2 class="text-3xl font-bold text-white">What is Information Technology?</h2>
+                        <h3 class="text-xl font-arabic text-blue-400">ما هي تقنية المعلومات؟</h3>
+                    </div>
+                </div>
+
+                <div class="grid lg:grid-cols-2 gap-12 items-start">
+                    <div class="space-y-6" data-aos="fade-right">
+                        <div class="glass-card p-8 rounded-2xl relative overflow-hidden">
+                            <h3 class="text-lg font-bold text-white mb-2 uppercase tracking-wider text-blue-400">
+                                Definition / التعريف</h3>
+                            <p class="text-slate-300 leading-relaxed mb-4">
+                                IT is the study and practical use of computer systems, software, and telecommunications
+                                to
+                                <span class="text-blue-400 font-semibold">collect, store, protect, process, transmit,
+                                    and retrieve</span> information.
+                            </p>
+                            <p class="font-arabic text-slate-400 leading-relaxed text-right border-t border-slate-700/50 pt-4 mt-4"
+                                dir="rtl">
+                                تقنية المعلومات هي دراسة واستخدام أنظمة الحاسوب والبرمجيات والاتصالات لجمع وتخزين وحماية
+                                ومعالجة ونقل واسترجاع المعلومات.
+                            </p>
+                        </div>
+
+                        <!-- Infrastructure List -->
+                        <div class="glass-card p-6 rounded-xl">
+                            <h4 class="font-bold text-white mb-4 flex items-center gap-2">
+                                <i class="fas fa-network-wired text-purple-500"></i>
+                                IT Infrastructure Foundations
+                            </h4>
+                            <div class="prose-sm">
+                                <ul class="space-y-4">
+                                    <li class="bg-slate-800/50 p-3 rounded-lg">
+                                        <div class="font-semibold text-slate-200">Computing Power (Servers, PCs)</div>
+                                        <div class="font-arabic text-slate-500 text-xs text-right" dir="rtl">قوة الحوسبة
+                                            (الخوادم، الحواسيب الشخصية)</div>
+                                    </li>
+                                    <li class="bg-slate-800/50 p-3 rounded-lg">
+                                        <div class="font-semibold text-slate-200">Data Storage (Databases, Cloud)</div>
+                                        <div class="font-arabic text-slate-500 text-xs text-right" dir="rtl">تخزين
+                                            البيانات (قواعد البيانات، السحابة)</div>
+                                    </li>
+                                    <li class="bg-slate-800/50 p-3 rounded-lg">
+                                        <div class="font-semibold text-slate-200">Networking (Routers, Switches)</div>
+                                        <div class="font-arabic text-slate-500 text-xs text-right" dir="rtl">الشبكات
+                                            (أجهزة التوجيه، المحولات)</div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card p-6 rounded-2xl" data-aos="fade-left">
+                        <h4 class="font-bold text-white mb-6 flex justify-between items-center">
+                            <span>Key Specialized Areas</span>
+                            <span class="font-arabic text-sm text-slate-400">المجالات المتخصصة</span>
+                        </h4>
+                        <div class="grid gap-3">
+                            <!-- Items -->
+                            <div
+                                class="p-4 bg-slate-900/50 rounded-lg flex items-center gap-4 hover:bg-slate-800 transition group border border-slate-700/50">
+                                <div
+                                    class="w-10 h-10 rounded-full bg-red-500/20 flex items-center justify-center text-red-500 group-hover:scale-110 transition">
+                                    <i class="fas fa-shield-alt"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="text-slate-200 font-semibold text-sm">Cybersecurity</div>
+                                    <div class="font-arabic text-slate-500 text-xs text-right" dir="rtl">الأمن
+                                        السيبراني: حماية البيانات والأنظمة</div>
+                                </div>
+                            </div>
+                            <div
+                                class="p-4 bg-slate-900/50 rounded-lg flex items-center gap-4 hover:bg-slate-800 transition group border border-slate-700/50">
+                                <div
+                                    class="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-500 group-hover:scale-110 transition">
+                                    <i class="fas fa-cloud"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="text-slate-200 font-semibold text-sm">Cloud Computing</div>
+                                    <div class="font-arabic text-slate-500 text-xs text-right" dir="rtl">الحوسبة
+                                        السحابية: تقديم الموارد عبر الإنترنت</div>
+                                </div>
+                            </div>
+                            <div
+                                class="p-4 bg-slate-900/50 rounded-lg flex items-center gap-4 hover:bg-slate-800 transition group border border-slate-700/50">
+                                <div
+                                    class="w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center text-amber-500 group-hover:scale-110 transition">
+                                    <i class="fas fa-database"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="text-slate-200 font-semibold text-sm">Big Data & Analytics</div>
+                                    <div class="font-arabic text-slate-500 text-xs text-right" dir="rtl">البيانات الضخمة
+                                        والتحليلات</div>
+                                </div>
+                            </div>
+                            <div
+                                class="p-4 bg-slate-900/50 rounded-lg flex items-center gap-4 hover:bg-slate-800 transition group border border-slate-700/50">
+                                <div
+                                    class="w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-500 group-hover:scale-110 transition">
+                                    <i class="fas fa-robot"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="text-slate-200 font-semibold text-sm">Artificial Intelligence (AI)</div>
+                                    <div class="font-arabic text-slate-500 text-xs text-right" dir="rtl">الذكاء
+                                        الاصطناعي: أنظمة تحاكي الذكاء البشري</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. What is a Computer? -->
+        <section id="computer" class="py-20 px-6">
+            <div class="container mx-auto max-w-6xl">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold text-white mb-2">2. What is a Computer?</h2>
+                    <p class="text-xl font-arabic text-purple-400">ما هو الحاسوب؟</p>
+                </div>
+
+                <!-- Animated SVG -->
+                <div class="glass-card p-6 rounded-2xl bg-black/40 mb-12 relative overflow-hidden shadow-2xl shadow-purple-900/20"
+                    data-aos="fade-up">
+                    <svg viewBox="0 0 800 300" class="w-full h-auto rounded-xl" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" style="stop-color:#3B82F6;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#8B5CF6;stop-opacity:1" />
+                            </linearGradient>
+                            <marker id="arrowHead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                                <path d="M0,0 L0,6 L9,3 z" fill="#64748b" />
+                            </marker>
+                        </defs>
+
+                        <!-- Background Wireframe -->
+                        <path d="M0 150 H800" stroke="#1e293b" stroke-width="1" stroke-dasharray="5,5" />
+
+                        <!-- 1. Input -->
+                        <g transform="translate(50, 80)">
+                            <rect width="180" height="140" rx="12" fill="#1e293b" stroke="#10B981" stroke-width="2" />
+                            <text x="90" y="40" text-anchor="middle" fill="#10B981" font-weight="bold" font-size="18">1.
+                                INPUT</text>
+                            <text x="90" y="70" text-anchor="middle" fill="#cbd5e1" font-size="14">Input Devices</text>
+                            <text x="90" y="100" text-anchor="middle" fill="#64748b" font-size="12"
+                                font-family="Cairo">أجهزة الإدخال</text>
+                            <!-- Animated Icon -->
+                            <circle cx="90" cy="115" r="4" fill="#10B981">
+                                <animate attributeName="opacity" values="0;1;0" dur="2s" repeatCount="indefinite" />
+                            </circle>
+                        </g>
+
+                        <!-- Arrow 1 -->
+                        <line x1="230" y1="150" x2="290" y2="150" stroke="#64748b" stroke-width="3"
+                            marker-end="url(#arrowHead)">
+                            <animate attributeName="stroke-dasharray" from="0,20" to="20,0" dur="1s"
+                                repeatCount="indefinite" />
+                        </line>
+
+                        <!-- 2. Process -->
+                        <g transform="translate(310, 80)">
+                            <rect width="180" height="140" rx="12" fill="#1e293b" stroke="#3B82F6" stroke-width="2" />
+                            <text x="90" y="40" text-anchor="middle" fill="#3B82F6" font-weight="bold" font-size="18">2.
+                                PROCESS</text>
+                            <text x="90" y="70" text-anchor="middle" fill="#cbd5e1" font-size="14">CPU & Memory</text>
+                            <text x="90" y="100" text-anchor="middle" fill="#64748b" font-size="12"
+                                font-family="Cairo">المعالجة (CPU)</text>
+                            <rect x="70" y="110" width="40" height="10" fill="#3B82F6">
+                                <animate attributeName="width" values="0;40;0" dur="1.5s" repeatCount="indefinite" />
+                            </rect>
+                        </g>
+
+                        <!-- Arrow 2 -->
+                        <line x1="490" y1="150" x2="550" y2="150" stroke="#64748b" stroke-width="3"
+                            marker-end="url(#arrowHead)">
+                            <animate attributeName="stroke-dasharray" from="0,20" to="20,0" dur="1s"
+                                repeatCount="indefinite" />
+                        </line>
+
+                        <!-- 3. Output -->
+                        <g transform="translate(570, 80)">
+                            <rect width="180" height="140" rx="12" fill="#1e293b" stroke="#F59E0B" stroke-width="2" />
+                            <text x="90" y="40" text-anchor="middle" fill="#F59E0B" font-weight="bold" font-size="18">3.
+                                OUTPUT</text>
+                            <text x="90" y="70" text-anchor="middle" fill="#cbd5e1" font-size="14">Output Devices</text>
+                            <text x="90" y="100" text-anchor="middle" fill="#64748b" font-size="12"
+                                font-family="Cairo">أجهزة الإخراج</text>
+                            <circle cx="90" cy="115" r="4" fill="#F59E0B">
+                                <animate attributeName="r" values="2;6;2" dur="2s" repeatCount="indefinite" />
+                            </circle>
+                        </g>
+                    </svg>
+                </div>
+
+                <!-- Definition Text -->
+                <div class="grid md:grid-cols-2 gap-8 text-center">
+                    <div class="glass-card p-6 rounded-xl hover:bg-blue-900/10 transition group">
+                        <div
+                            class="w-12 h-12 bg-blue-500/20 rounded-full flex items-center justify-center mx-auto mb-4 text-blue-400 group-hover:rotate-12 transition">
+                            <i class="fas fa-microchip"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">Hardware</h3>
+                        <p class="text-slate-400 text-sm">Physical components you can see and touch.</p>
+                        <p class="font-arabic text-slate-500 text-xs mt-1" dir="rtl">الأجهزة: المكونات المادية التي
+                            يمكنك لمسها ورؤيتها.</p>
+                    </div>
+                    <div class="glass-card p-6 rounded-xl hover:bg-purple-900/10 transition group">
+                        <div
+                            class="w-12 h-12 bg-purple-500/20 rounded-full flex items-center justify-center mx-auto mb-4 text-purple-400 group-hover:rotate-12 transition">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">Software</h3>
+                        <p class="text-slate-400 text-sm">Instructions that enable the computer to perform tasks.</p>
+                        <p class="font-arabic text-slate-500 text-xs mt-1" dir="rtl">البرمجيات: التعليمات التي تمكن
+                            الحاسوب من أداء المهام.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Hardware Basics -->
+        <section id="hardware" class="py-20 px-6 bg-slate-900/30">
+            <div class="container mx-auto max-w-6xl">
+                <h2 class="text-3xl font-bold mb-12 text-center text-white">4. Hardware Basics <span
+                        class="block text-xl font-arabic text-slate-400 mt-2">أساسيات الأجهزة</span></h2>
+
+                <div class="grid lg:grid-cols-3 gap-8">
+                    <!-- INPUT -->
+                    <div class="space-y-4">
+                        <div class="glass-card p-6 rounded-xl h-full border-t-4 border-t-emerald-500">
+                            <h3 class="text-xl font-bold text-emerald-400 mb-4 flex items-center gap-2"><i
+                                    class="fas fa-keyboard"></i> Input Devices <span
+                                    class="text-xs ml-auto font-arabic text-slate-500">وحدات الإدخال</span></h3>
+                            <p class="text-xs text-slate-400 mb-4">Enables user to enter data into computer.</p>
+
+                            <ul class="space-y-2 text-sm text-slate-300">
+                                <li
+                                    class="flex items-center gap-2 bg-slate-800/50 p-2 rounded hover:bg-slate-700/50 transition">
+                                    <i class="fas fa-keyboard w-5 text-emerald-500/50"></i> Keyboard <span
+                                        class="text-[10px] text-slate-500 ml-auto font-arabic">لوحة المفاتيح</span>
+                                </li>
+                                <li
+                                    class="flex items-center gap-2 bg-slate-800/50 p-2 rounded hover:bg-slate-700/50 transition">
+                                    <i class="fas fa-mouse w-5 text-emerald-500/50"></i> Mouse <span
+                                        class="text-[10px] text-slate-500 ml-auto font-arabic">الفأرة</span>
+                                </li>
+                                <li
+                                    class="flex items-center gap-2 bg-slate-800/50 p-2 rounded hover:bg-slate-700/50 transition">
+                                    <i class="fas fa-barcode w-5 text-emerald-500/50"></i> Scanner / Barcode <span
+                                        class="text-[10px] text-slate-500 ml-auto font-arabic">ماسح ضوئي</span>
+                                </li>
+                                <li
+                                    class="flex items-center gap-2 bg-slate-800/50 p-2 rounded hover:bg-slate-700/50 transition">
+                                    <i class="fas fa-microphone w-5 text-emerald-500/50"></i> Microphone <span
+                                        class="text-[10px] text-slate-500 ml-auto font-arabic">ميكروفون</span>
+                                </li>
+                                <!-- More items concisely -->
+                                <li class="text-xs text-slate-500 pt-2 italic">Also: Joystick, Light Pen, OMR, OCR,
+                                    MICR, Track Ball</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- PROCESS (CPU) -->
+                    <div class="space-y-4 lg:-mt-6">
+                        <div
+                            class="glass-card p-6 rounded-xl shadow-2xl shadow-purple-500/10 border border-purple-500/30 relative overflow-hidden">
+                            <div
+                                class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500">
+                            </div>
+
+                            <div class="text-center mb-6">
+                                <div
+                                    class="w-16 h-16 bg-purple-500/20 rounded-full flex items-center justify-center mx-auto mb-4 animate-pulse">
+                                    <i class="fas fa-microchip text-3xl text-purple-400"></i>
+                                </div>
+                                <h3 class="text-2xl font-bold text-white">Central Processing Unit</h3>
+                                <p class="text-sm text-purple-400 font-bold tracking-widest">CPU - The Brain</p>
+                                <p class="font-arabic text-slate-400 text-xs mt-1">وحدة المعالجة المركزية</p>
+                            </div>
+
+                            <!-- CPU Specs -->
+                            <div class="space-y-4">
+                                <div class="bg-slate-900/80 p-3 rounded-lg border border-slate-700">
+                                    <h4 class="text-xs font-bold text-slate-400 uppercase mb-2">Machine Cycle</h4>
+                                    <div class="flex justify-between text-[10px] font-mono text-purple-300">
+                                        <span>FETCH</span> &rarr; <span>DECODE</span> &rarr; <span>EXECUTE</span> &rarr;
+                                        <span>STORE</span>
+                                    </div>
+                                </div>
+
+                                <div class="bg-slate-900/80 p-3 rounded-lg border border-slate-700">
+                                    <h4 class="text-xs font-bold text-slate-400 uppercase mb-2">Components</h4>
+                                    <ul class="text-xs text-slate-300 space-y-1">
+                                        <li class="flex justify-between"><span>ALU (Math/Logic)</span> <span
+                                                class="font-arabic text-slate-500">الحساب والمنطق</span></li>
+                                        <li class="flex justify-between"><span>CU (Control Unit)</span> <span
+                                                class="font-arabic text-slate-500">وحدة التحكم</span></li>
+                                        <li class="flex justify-between"><span>Memory Unit</span> <span
+                                                class="font-arabic text-slate-500">الذاكرة</span></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- OUTPUT -->
+                    <div class="space-y-4">
+                        <div class="glass-card p-6 rounded-xl h-full border-t-4 border-t-blue-500">
+                            <h3 class="text-xl font-bold text-blue-400 mb-4 flex items-center gap-2"><i
+                                    class="fas fa-desktop"></i> Output Devices <span
+                                    class="text-xs ml-auto font-arabic text-slate-500">وحدات الإخراج</span></h3>
+                            <p class="text-xs text-slate-400 mb-4">Shows the result after processing.</p>
+
+                            <ul class="space-y-2 text-sm text-slate-300">
+                                <li
+                                    class="flex items-center gap-2 bg-slate-800/50 p-2 rounded hover:bg-slate-700/50 transition">
+                                    <i class="fas fa-tv w-5 text-blue-500/50"></i> Monitor <span
+                                        class="text-[10px] text-slate-500 ml-auto font-arabic">الشاشة</span>
+                                </li>
+                                <li
+                                    class="flex items-center gap-2 bg-slate-800/50 p-2 rounded hover:bg-slate-700/50 transition">
+                                    <i class="fas fa-print w-5 text-blue-500/50"></i> Printer <span
+                                        class="text-[10px] text-slate-500 ml-auto font-arabic">الطابعة</span>
+                                </li>
+                                <li
+                                    class="flex items-center gap-2 bg-slate-800/50 p-2 rounded hover:bg-slate-700/50 transition">
+                                    <i class="fas fa-headphones w-5 text-blue-500/50"></i> Spkr / Headphone <span
+                                        class="text-[10px] text-slate-500 ml-auto font-arabic">سماعات</span>
+                                </li>
+                                <li
+                                    class="flex items-center gap-2 bg-slate-800/50 p-2 rounded hover:bg-slate-700/50 transition">
+                                    <i class="fas fa-pen-nib w-5 text-blue-500/50"></i> Plotter <span
+                                        class="text-[10px] text-slate-500 ml-auto font-arabic">الراسخ</span>
+                                </li>
+                                <li
+                                    class="flex items-center gap-2 bg-slate-800/50 p-2 rounded hover:bg-slate-700/50 transition">
+                                    <i class="fas fa-projector w-5 text-blue-500/50"></i> Projector <span
+                                        class="text-[10px] text-slate-500 ml-auto font-arabic">جهاز عرض</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CPU Details Section (New) -->
+        <section id="cpu" class="py-20 px-6">
+            <div class="container mx-auto max-w-5xl">
+                <div class="glass-card p-8 rounded-2xl">
+                    <h2 class="text-2xl font-bold text-white mb-6">CPU Architecture & Performance</h2>
+
+                    <div class="grid md:grid-cols-2 gap-12">
+                        <!-- Types -->
+                        <div>
+                            <h3 class="text-lg font-bold text-purple-400 mb-4">Types of CPU (Cores)</h3>
+                            <div class="space-y-3">
+                                <div
+                                    class="flex items-center gap-3 p-3 rounded-lg bg-slate-800/50 border border-slate-700">
+                                    <div
+                                        class="w-8 h-8 rounded bg-slate-700 flex items-center justify-center font-bold text-xs">
+                                        1</div>
+                                    <div>
+                                        <div class="text-sm font-bold text-white">Single Core</div>
+                                        <div class="text-xs text-slate-400">One task at a time. Early PCs.</div>
+                                    </div>
+                                </div>
+                                <div
+                                    class="flex items-center gap-3 p-3 rounded-lg bg-slate-800/50 border border-slate-700">
+                                    <div
+                                        class="w-8 h-8 rounded bg-slate-700 flex items-center justify-center font-bold text-xs">
+                                        2</div>
+                                    <div>
+                                        <div class="text-sm font-bold text-white">Dual Core</div>
+                                        <div class="text-xs text-slate-400">Two tasks. Entry laptops.</div>
+                                    </div>
+                                </div>
+                                <div
+                                    class="flex items-center gap-3 p-3 rounded-lg bg-slate-800/50 border border-slate-700">
+                                    <div
+                                        class="w-8 h-8 rounded bg-slate-700 flex items-center justify-center font-bold text-xs">
+                                        4</div>
+                                    <div>
+                                        <div class="text-sm font-bold text-white">Quad Core</div>
+                                        <div class="text-xs text-slate-400">Multitasking. Modern PCs.</div>
+                                    </div>
+                                </div>
+                                <div
+                                    class="flex items-center gap-3 p-3 rounded-lg bg-slate-800/50 border border-slate-700">
+                                    <div
+                                        class="w-8 h-8 rounded bg-purple-600 text-white flex items-center justify-center font-bold text-xs">
+                                        8+</div>
+                                    <div>
+                                        <div class="text-sm font-bold text-white">Hexa / Octa Core</div>
+                                        <div class="text-xs text-slate-400">Gaming & Heavy tasks.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Clock Speed -->
+                        <div>
+                            <h3 class="text-lg font-bold text-blue-400 mb-4">Performance (Clock Speed)</h3>
+                            <div
+                                class="p-6 bg-slate-900/80 rounded-xl border border-blue-500/20 text-center relative overflow-hidden">
+                                <i class="fas fa-tachometer-alt text-5xl text-blue-500 mb-4"></i>
+                                <h4 class="text-2xl font-bold text-white">GHz / MHz</h4>
+                                <p class="text-sm text-slate-400 mt-2">Rate at which processor completes a cycle.</p>
+                                <p class="font-arabic text-sm text-slate-500 mt-2" dir="rtl">سرعة الساعة: وتقاس بـ
+                                    الميجاهيرتز أو الجيجاهيرتز.</p>
+                            </div>
+
+                            <div class="mt-6">
+                                <h4 class="text-sm font-bold text-white mb-2">CPU Internal Units</h4>
+                                <ul class="text-sm text-slate-400 space-y-2">
+                                    <li class="flex items-start gap-2">
+                                        <i class="fas fa-calculator text-yellow-500 mt-1"></i>
+                                        <div>
+                                            <strong class="text-white">ALU:</strong> Arithmetic (Math) & Logic
+                                            (Compare).
+                                        </div>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <i class="fas fa-traffic-light text-red-500 mt-1"></i>
+                                        <div>
+                                            <strong class="text-white">CU:</strong> Controls operations, does not
+                                            process.
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. Storage Section -->
+        <section id="storage" class="py-20 px-6 bg-slate-900/30">
+            <div class="container mx-auto max-w-6xl">
+                <h2 class="text-3xl font-bold mb-12 text-center text-white">5. Memory & Storage <span
+                        class="block text-xl font-arabic text-slate-400 mt-2">الذاكرة والتخزين</span></h2>
+
+                <!-- Tabs -->
+                <div class="flex justify-center flex-wrap gap-4 mb-12">
+                    <button onclick="showTab('primary')" id="btn-primary"
+                        class="px-6 py-2 rounded-full border border-blue-500/50 bg-blue-500/10 text-blue-400 hover:bg-blue-500 hover:text-white transition">Primary
+                        Memory</button>
+                    <button onclick="showTab('secondary')" id="btn-secondary"
+                        class="px-6 py-2 rounded-full border border-slate-700 bg-transparent text-slate-400 hover:border-purple-500 hover:text-purple-400 transition">Secondary
+                        Storage</button>
+                    <button onclick="showTab('units')" id="btn-units"
+                        class="px-6 py-2 rounded-full border border-slate-700 bg-transparent text-slate-400 hover:border-green-500 hover:text-green-400 transition">Storage
+                        Units</button>
+                </div>
+
+                <div id="tab-primary" class="tab-content transition-all duration-300">
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div class="glass-card p-6 rounded-xl border-l-4 border-l-blue-500">
+                            <h3 class="text-xl font-bold text-white mb-2">RAM (Random Access Memory)</h3>
+                            <ul class="list-disc list-inside text-slate-400 space-y-2">
+                                <li><span class="text-red-400 font-bold">Volatile</span> (Temporary).</li>
+                                <li>Stores data currently in use.</li>
+                                <li>Direct access by CPU.</li>
+                            </ul>
+                            <p class="font-arabic text-slate-500 text-sm mt-4 text-right border-t border-slate-700 pt-2"
+                                dir="rtl">ذاكرة الوصول العشوائي: مؤقتة، تفقد البيانات عند انقطاع التيار.</p>
+                        </div>
+                        <div class="glass-card p-6 rounded-xl border-l-4 border-l-slate-500">
+                            <h3 class="text-xl font-bold text-white mb-2">ROM (Read Only Memory)</h3>
+                            <ul class="list-disc list-inside text-slate-400 space-y-2">
+                                <li><span class="text-green-400 font-bold">Non-Volatile</span> (Permanent).</li>
+                                <li>Stores boot-up instructions.</li>
+                                <li>Read-only, user cannot change.</li>
+                            </ul>
+                            <p class="font-arabic text-slate-500 text-sm mt-4 text-right border-t border-slate-700 pt-2"
+                                dir="rtl">ذاكرة القراءة فقط: دائمة، تحتوي على تعليمات بدء التشغيل.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="tab-secondary" class="tab-content hidden transition-all duration-300">
+                    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                        <div class="glass-card p-4 rounded-lg text-center">
+                            <i class="fas fa-hdd text-3xl text-purple-400 mb-3"></i>
+                            <div class="font-bold text-white">Hard Disk (HDD)</div>
+                            <div class="text-xs text-slate-500">High Capacity, OS Storage</div>
+                        </div>
+                        <div class="glass-card p-4 rounded-lg text-center">
+                            <i class="fas fa-compact-disc text-3xl text-purple-400 mb-3"></i>
+                            <div class="font-bold text-white">Optical Disc</div>
+                            <div class="text-xs text-slate-500">CD (~700MB), DVD (4GB+)</div>
+                        </div>
+                        <div class="glass-card p-4 rounded-lg text-center">
+                            <i class="fab fa-usb text-3xl text-purple-400 mb-3"></i>
+                            <div class="font-bold text-white">Flash Memory</div>
+                            <div class="text-xs text-slate-500">USB, Portable</div>
+                        </div>
+                        <div class="glass-card p-4 rounded-lg text-center">
+                            <i class="fas fa-save text-3xl text-purple-400 mb-3"></i>
+                            <div class="font-bold text-white">Floppy Disk</div>
+                            <div class="text-xs text-slate-500">Obsolete (1.44 MB)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="tab-units" class="tab-content hidden transition-all duration-300">
+                    <div class="glass-card p-0 rounded-xl overflow-hidden max-w-3xl mx-auto">
+                        <table class="w-full text-left custom-table text-sm text-slate-300">
+                            <thead class="bg-slate-800">
+                                <tr>
+                                    <th>Unit</th>
+                                    <th>Short</th>
+                                    <th>Capacity</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="text-white font-bold">Bit</td>
+                                    <td>b</td>
+                                    <td>0 or 1</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-white font-bold">Byte</td>
+                                    <td>B</td>
+                                    <td>8 bits</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-purple-300 font-bold">Kilobyte</td>
+                                    <td>KB</td>
+                                    <td>1024 Bytes</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-purple-300 font-bold">Megabyte</td>
+                                    <td>MB</td>
+                                    <td>1024 KB</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-purple-300 font-bold">Gigabyte</td>
+                                    <td>GB</td>
+                                    <td>1024 MB</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-purple-300 font-bold">Terabyte</td>
+                                    <td>TB</td>
+                                    <td>1024 GB</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-slate-500">Petabyte</td>
+                                    <td>PB</td>
+                                    <td>1024 TB</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-slate-500">Exabyte</td>
+                                    <td>EB</td>
+                                    <td>1024 PB</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-slate-500">Zettabyte</td>
+                                    <td>ZB</td>
+                                    <td>1024 EB</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-slate-500">Yottabyte</td>
+                                    <td>YB</td>
+                                    <td>1024 ZB</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Exam Section -->
+        <section id="exam" class="py-24 px-6 bg-slate-900 border-t border-slate-800 relative overflow-hidden">
+            <!-- Decor -->
+            <div class="absolute top-0 right-0 w-64 h-64 bg-blue-600/5 rounded-full blur-3xl"></div>
+
+            <div class="container mx-auto max-w-5xl relative z-10">
+                <div class="text-center mb-16" data-aos="fade-up">
+                    <span
+                        class="inline-block py-1 px-3 rounded bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-mono mb-4">ASSESSMENT</span>
+                    <h2 class="text-4xl font-bold text-white">Course Exam</h2>
+                    <p class="text-slate-400 mt-2">Test your knowledge with 30 questions.</p>
+                </div>
+
+                <div id="quiz-grid" class="grid md:grid-cols-2 gap-6">
+                    <!-- JS Injected -->
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-12 border-t border-slate-800 bg-black/50 text-center">
+        <p class="text-slate-500 font-medium">Fundamental of IT - Lecture 1</p>
+        <p class="text-slate-600 text-sm mt-1">Designed for First Year Students</p>
+    </footer>
+
+    <script>
+        // AOS
+        AOS.init({ duration: 800, once: true });
+
+        // Tabs
+        function showTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.getElementById('tab-' + tabId).classList.remove('hidden');
+
+            // Reset buttons
+            const btns = ['primary', 'secondary', 'units'];
+            btns.forEach(b => {
+                const btn = document.getElementById('btn-' + b);
+                if (b === tabId) {
+                    btn.className = "px-6 py-2 rounded-full border border-blue-500/50 bg-blue-500/10 text-blue-400 transition shadow-lg shadow-blue-500/20";
+                } else {
+                    btn.className = "px-6 py-2 rounded-full border border-slate-700 bg-transparent text-slate-400 hover:border-slate-500 transition";
+                }
+            });
+        }
+
+        // Questions Data
+        const questions = [
+            { text: "What defines Information Technology?", ans: 1, expl: "Study and use of systems to collect, store, and process info.", opts: ["Repairing hardware", "Study of info processing systems", "Selling computers", "Writing code only"] },
+            { text: "Which is NOT part of IT Infrastructure?", ans: 2, expl: "Furniture is physical, not IT infrastructure.", opts: ["Hardware", "Network", "Office Chair", "Data Storage"] },
+            { text: "What is a Computer?", ans: 0, expl: "Programmable device: Input -> Process -> Output.", opts: ["Programmable electronic device", "A type of calculator", "Just a screen", "A storage box"] },
+            { text: "Input Devices do what?", ans: 1, expl: "Enable user to enter data.", opts: ["Process data", "Enter data", "Show result", "Store data"] },
+            { text: "Which is an Output Device?", ans: 3, expl: "Projector shows the result.", opts: ["Mouse", "Scanner", "Microphone", "Projector"] },
+            { text: "Main parts of CPU?", ans: 0, expl: "ALU, Control Unit, Memory Unit.", opts: ["ALU & CU", "RAM & ROM", "Input & Output", "Screen & Key"] },
+            { text: "ALU stands for?", ans: 0, expl: "Arithmetic and Logic Unit.", opts: ["Arithmetic and Logic Unit", "All Logic Unit", "Advanced Learning Unit", "Auto Link Unit"] },
+            { text: "RAM is...?", ans: 0, expl: "Volatile (Temporary).", opts: ["Volatile", "Non-Volatile", "Permanent", "Slow"] },
+            { text: "ROM stores...?", ans: 1, expl: "Boot-up instructions.", opts: ["User files", "Boot instructions", "Games", "Deleted files"] },
+            { text: "1 Byte = ?", ans: 2, expl: "8 Bits.", opts: ["4 Bits", "16 Bits", "8 Bits", "10 Bits"] },
+            { text: "Storage capacity of a DVD?", ans: 1, expl: "Over 4 GB.", opts: ["700 MB", "4 GB+", "1.44 MB", "1 TB"] },
+            { text: "What is 'Fetch' in CPU cycle?", ans: 2, expl: "Retrieves instruction from memory.", opts: ["Execute", "Decode", "Fetch form memory", "Store"] },
+            { text: "Example of Optical Disc?", ans: 2, expl: "CD and DVD are optical.", opts: ["USB", "HDD", "CD/DVD", "Floppy"] },
+            { text: "Cybersecurity's role?", ans: 0, expl: "Protecting systems and data.", opts: ["Protecting data", "Making games", "Selling parts", "Typing"] },
+            { text: "Cloud Computing is...?", ans: 1, expl: "Delivering resources online.", opts: ["Weather app", "Online resources", "Local hard drive", "Networking cable"] },
+            { text: "A Quad-Core CPU has...?", ans: 2, expl: "4 Cores.", opts: ["2 Cores", "6 Cores", "4 Cores", "8 Cores"] },
+            { text: "Clock Speed is measured in?", ans: 1, expl: "GHz or MHz.", opts: ["Bytes", "GHz/MHz", "Pixels", "Ohms"] },
+            { text: "Secondary Memory is...?", ans: 1, expl: "Non-volatile and permanent.", opts: ["Volatile", "Non-Volatile", "Fast defined", "Small"] },
+            { text: "Input typically...?", ans: 2, expl: "Accepts data from user.", opts: ["Displays data", "Stores data", "Accepts data", "Process data"] },
+            { text: "Output typically...?", ans: 0, expl: "Shows processed info.", opts: ["Shows info", "Takes info", "Deletes info", "Hides info"] },
+            { text: "1 Kilobyte (KB) = ?", ans: 1, expl: "1024 Bytes.", opts: ["1000 B", "1024 B", "1024 MB", "8 B"] },
+            { text: "Highest unit in list?", ans: 3, expl: "Yottabyte is the largest listed.", opts: ["Terabyte", "Petabyte", "Exabyte", "Yottabyte"] },
+            { text: "Scanner is...?", ans: 0, expl: "Input device.", opts: ["Input", "Output", "Storage", "Processing"] },
+            { text: "Plotter is...?", ans: 1, expl: "Output device (printing vector graphics).", opts: ["Input", "Output", "Storage", "Processing"] },
+            { text: "Control Unit (CU) function?", ans: 2, expl: "Directs traffic, does not process.", opts: ["Calculate", "Store", "Control operations", "Display"] },
+            { text: "Floppy Disk capacity?", ans: 0, expl: "1.44 MB.", opts: ["1.44 MB", "1.44 GB", "700 MB", "4 GB"] },
+            { text: "Primary Memory location?", ans: 1, expl: "Motherboard near CPU.", opts: ["External", "Motherboard", "In the monitor", "On the mouse"] },
+            { text: "Bit values?", ans: 0, expl: "0 or 1.", opts: ["0 or 1", "0 to 9", "A to Z", "1 to 10"] },
+            { text: "MICR stands for?", ans: 2, expl: "Magnetic Ink Card Reader.", opts: ["Magnetic In Case", "Magic Ink", "Magnetic Ink Card Reader", "My Card Reader"] },
+            { text: "Artificial Intelligence?", ans: 0, expl: "Systems requiring human intelligence.", opts: ["Smart systems", "Fast typing", "Online gaming", "Designing"] }
+        ];
+
+        // Render Quiz
+        const grid = document.getElementById('quiz-grid');
+        questions.forEach((q, i) => {
+            const card = document.createElement('div');
+            card.className = "glass-card p-6 rounded-xl hover:bg-slate-800/80 group transition flex flex-col";
+            card.innerHTML = `
+                <div class="flex justify-between items-start mb-4">
+                    <span class="text-sm font-mono text-blue-500">Q${i + 1}</span>
+                </div>
+                <p class="text-lg font-semibold text-white mb-6">${q.text}</p>
+                <div class="grid gap-2 mb-4 text-sm text-slate-300">
+                    ${q.opts.map((opt, optIdx) => `
+                        <div onclick="checkAnswer(this, ${optIdx}, ${q.ans})" 
+                             class="p-3 rounded bg-slate-900/50 border border-slate-700 hover:bg-slate-800 transition cursor-pointer answer-opt">
+                            ${String.fromCharCode(65 + optIdx)}) ${opt}
+                        </div>
+                    `).join('')}
+                </div>
+                <div class="mt-auto">
+                    <button onclick="this.nextElementSibling.classList.toggle('show')" class="text-xs flex items-center gap-2 text-slate-500 hover:text-emerald-400 font-bold uppercase tracking-wider transition cursor-pointer mt-2">
+                        <i class="fas fa-eye"></i> Show Answer
+                    </button>
+                    <div class="answer-container">
+                        <p class="text-emerald-400 font-bold mb-1">Correct: ${String.fromCharCode(65 + q.ans)}</p>
+                        <p class="text-xs text-slate-300">${q.expl}</p>
+                    </div>
+                </div>
+            `;
+            grid.appendChild(card);
+        });
+
+        function checkAnswer(el, selected, correct) {
+            // Reset siblings
+            const parent = el.parentElement;
+            Array.from(parent.children).forEach(child => {
+                child.classList.remove('bg-emerald-500/20', 'border-emerald-500', 'bg-red-500/20', 'border-red-500');
+                child.classList.add('bg-slate-900/50', 'border-slate-700');
+            });
+
+            if (selected === correct) {
+                el.classList.remove('bg-slate-900/50', 'border-slate-700');
+                el.classList.add('bg-emerald-500/20', 'border-emerald-500');
+            } else {
+                el.classList.remove('bg-slate-900/50', 'border-slate-700');
+                el.classList.add('bg-red-500/20', 'border-red-500');
+            }
+        }
+    </script>
+</body>
+
+</html>
